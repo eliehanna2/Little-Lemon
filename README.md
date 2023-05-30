@@ -1,7 +1,7 @@
 [![logo.png](https://i.postimg.cc/K8TgbQs8/logo.png)](https://postimg.cc/DS2zdQT9)
 # Little Lemon Food Ordering App
 
-This is the ANDROID App Capstone Project of the Meta ANDROID Developer Professional Certificate program. It allows users to browse Little Lemon restaurant's menu and place orders.
+This is the ANDROID App Capstone Project of the Meta ANDROID Developer Professional Certificate program. It allows users to browse Little Lemon restaurant's menu on the app.
 
 
 ## Authors
