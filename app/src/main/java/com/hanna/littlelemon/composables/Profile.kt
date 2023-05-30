@@ -9,23 +9,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.hanna.littlelemon.Onboarding
 import com.hanna.littlelemon.R
 import com.hanna.littlelemon.ui.theme.PrimaryGreen
 import com.hanna.littlelemon.ui.theme.PrimaryYellow
+import com.hanna.littlelemon.composables.Onboarding
 
 @Composable
 fun Profile(navController: NavHostController) {
@@ -36,91 +32,96 @@ fun Profile(navController: NavHostController) {
     val lastName = sharedPreferences.getString("lastName", "") ?: "Hanna"
     val email = sharedPreferences.getString("email", "") ?: "elie@hanna.com"
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp)
     ) {
-        Header()
+        item{ Header() }
 
-        Text(
-            text = "Personal Information:",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(50.dp))
+        item{
+            Text(
+                text = "Personal Information:",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        item{ Spacer(modifier = Modifier.height(20.dp)) }
 
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.SpaceEvenly) {
-            Text(text = "First name")
-            OutlinedTextField(
-                value = firstName,
-                onValueChange = { /* No-op as it's static text */ },
-                readOnly = true,
-                enabled = false,
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = MaterialTheme.colors.surface
-                )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Last name")
-            OutlinedTextField(
-                value = lastName,
-                onValueChange = { /* No-op as it's static text */ },
-                readOnly = true,
-                enabled = false,
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = MaterialTheme.colors.surface
-                )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Email")
-            OutlinedTextField(
-                value = email,
-                onValueChange = { /* No-op as it's static text */ },
-                readOnly = true,
-                enabled = false,
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = MaterialTheme.colors.surface
-                )
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
+        item{
             Column(
-
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 20.dp),
-                verticalArrangement = Arrangement.Bottom
-            ){
-                Row(
-                    modifier = Modifier.fillMaxWidth()
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Text(text = "First name")
+                OutlinedTextField(
+                    value = firstName,
+                    onValueChange = { /* No-op as it's static text */ },
+                    readOnly = true,
+                    enabled = false,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = MaterialTheme.colors.surface
+                    )
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Last name")
+                OutlinedTextField(
+                    value = lastName,
+                    onValueChange = { /* No-op as it's static text */ },
+                    readOnly = true,
+                    enabled = false,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = MaterialTheme.colors.surface
+                    )
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Email")
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { /* No-op as it's static text */ },
+                    readOnly = true,
+                    enabled = false,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = MaterialTheme.colors.surface
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+                Column(
+
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 20.dp),
+                    verticalArrangement = Arrangement.Bottom
                 ) {
-                    OutlinedButton(
-                        onClick = {
-                            // Clear shared preferences
-                            val editor = sharedPreferences.edit()
-                            editor.clear()
-                            editor.apply()
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        OutlinedButton(
+                            onClick = {
+                                // Clear shared preferences
+                                val editor = sharedPreferences.edit()
+                                editor.clear()
+                                editor.apply()
+                                // Navigate to Onboarding screen
+                                navController.navigate("Onboarding")
+                            },
+                            border = BorderStroke(2.dp, PrimaryGreen),
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = PrimaryYellow,
+                                contentColor = PrimaryGreen
+                            ),
 
-                            // Navigate to Onboarding screen
-                            navController.navigate(Onboarding.route)
-                        },
-                        border = BorderStroke(2.dp, PrimaryGreen),
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = PrimaryYellow,
-                            contentColor = PrimaryGreen
-                        ),
 
-
-                        ) {
-                        Text(text = "Log Out", style = TextStyle(fontWeight = FontWeight.Bold))
+                            ) {
+                            Text(text = "Log Out", style = TextStyle(fontWeight = FontWeight.Bold))
+                        }
                     }
                 }
             }
@@ -130,15 +131,15 @@ fun Profile(navController: NavHostController) {
 
 @Composable
 fun Header() {
-    Column(
+    Row(
         modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxWidth(), horizontalArrangement = Arrangement.Center
     ) {
         Image(
             painter = painterResource(R.drawable.logo),
             contentDescription = "Logo",
             modifier = Modifier.size(200.dp)
+
         )
     }
 }
